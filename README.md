@@ -5,6 +5,9 @@ This codebase generates all the simulations and data presented in our paper [1].
 
 # Getting started
 
+## Platform
+Everything in this repository assumes you are running Linux. If you are on a Windows machine, the easiest way to get access to Linux is to enable [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install). If you are on Mac OS, then simply use the terminal.
+
 ## Installation guide
 1. Clone the repo:
     ```bash
@@ -12,7 +15,10 @@ This codebase generates all the simulations and data presented in our paper [1].
     cd collider
     ```
 
-2. From project's root, create a `conda` environment:
+2. From project's root, create the necessary `conda` environment:
+   - Install `conda` if you don't have it.
+   - Update `conda` to make sure you have the latest version.
+   - Now proceed to create an environment from the file:
     ```bash
     conda env create -f environment.yaml
     conda activate collider
@@ -44,8 +50,10 @@ Cells are initialized from yaml configuration files with the following fields:
 
 To generate the exact feature space used for simulations in [1], simply run 
 ```bash 
-python config/build.py
+python configs/build.py arg1
 ``` 
+where `arg1` defines the polarity type and can be one of `sva` or `ffcr`.
+
 If you prefer to define your own configuration file, then you *must* specify all the parameters listed in the table above, and follow the tree structure below:
 
 ```
@@ -76,7 +84,7 @@ python single_run.py arg1 arg2
    - `arg1`: `int`, defines the sub directory to use for config files, 
    - `arg2`: `str`, defines the cell polarity mechanism -- options are `sva` and `ffcr`.
 
-For example, `python single_run.py 0 sva` will run a collision with cells initialized from the files at `config/sva/grid_id0/`.
+For example, `python single_run.py 0 sva` will run a collision with cells initialized from the files at `config/sva/grid_id0/`. Simulations should finish in about 15-20 mintues.
 
 The results are stored in `output/sva/grid_id0/run_0/results.csv`, and the following important values are recorded:
 
@@ -90,7 +98,7 @@ The results are stored in `output/sva/grid_id0/run_0/results.csv`, and the follo
 The last two observables are time series collected only after the cell has equilibrated and before it has collided -- this constitutes the pre-collision history.
 
 ## Processing collision outcomes
-At the end of the day, we want relative center-of-mass speeds and contact angles averaged over the pre-collision times, defined as $\delta v=v_R - v_L$ and $\delta \theta = \theta_R - \theta_L$, respectively. `driver/process_data.py` does this for us and stores the processed results in `processed/*.csv`. In particular, the columns present are:
+At the end of the day, we want relative center-of-mass speeds and contact angles averaged over the pre-collision times, defined as $\delta v=v_R - v_L$ and $\delta \theta = \theta_R - \theta_L$, respectively. `driver/process_data.py` reads all of our simulation results, computes these values for us alongside the winning probability, and stores the processed results in `processed/*.csv`. In particular, the columns present are:
 
 1. surface tension $\gamma$, 
 2. adhesion to the substrate $A$, 
@@ -99,7 +107,7 @@ At the end of the day, we want relative center-of-mass speeds and contact angles
 5. $\delta \theta$ in degrees, and
 6. $P_{\rm win}$, the binary representation of whether cells trained to the left (1) or to the right (0).
 
-The processed data is attached to this repository.
+We have already run a complete set of simulations for each polarity mechanism and attached the processed data to this repository under `processed/`. We use this as an example in `driver/plots.ipynb`. You do not need to run `process_data.py` unless you decide to execute a massive number of simulations across different parameters and want to compile results at once.
 
 ## Plots
 Check out `driver/plots.ipynb` for a detailed look into how each plot presented in [1] was made. Feel free to check out `analysis.py` to see our data analysis schema in detail.  
