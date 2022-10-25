@@ -5,9 +5,6 @@ This codebase generates all the simulations and data presented in our paper [1].
 
 # Getting started
 
-## Platform
-Everything in this repository assumes you are running Linux. If you are on a Windows machine, the easiest way to get access to Linux is to enable [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install). If you are on Mac OS, then simply use the terminal.
-
 ## Installation guide
 1. Clone the repo:
     ```bash
@@ -97,6 +94,8 @@ The results are stored in `output/sva/grid_id0/run_0/results.csv`, and the follo
 
 The last two observables are time series collected only after the cell has equilibrated and before it has collided -- this constitutes the pre-collision history.
 
+Note that the table is sorted by `cell_id`, and as such, the linear temporal ordering is NOT preserved. Thus, you should not interpret the values of a column from row to row as being from a previous time step to its consecutive next one.
+
 ## Processing collision outcomes
 At the end of the day, we want relative center-of-mass speeds and contact angles averaged over the pre-collision times, defined as $\delta v=v_R - v_L$ and $\delta \theta = \theta_R - \theta_L$, respectively. `driver/process_data.py` reads all of our simulation results, computes these values for us alongside the winning probability, and stores the processed results in `processed/*.csv`. In particular, the columns present are:
 
@@ -110,4 +109,9 @@ At the end of the day, we want relative center-of-mass speeds and contact angles
 We have already run a complete set of simulations for each polarity mechanism and attached the processed data to this repository under `processed/`. We use this as an example in `driver/plots.ipynb`. You do not need to run `process_data.py` unless you decide to execute a massive number of simulations across different parameters and want to compile results at once.
 
 ## Plots
-Check out `driver/plots.ipynb` for a detailed look into how each plot presented in [1] was made. Feel free to check out `analysis.py` to see our data analysis schema in detail.  
+Check out `driver/plots.ipynb` for a detailed look into how each plot presented in [1] was made. Feel free to check out `analysis.py` to see our data analysis schema in detail.
+
+Note that you must run the Jupyter notebook in the `conda` environment we created above. This is because it needs to find the `analysis` package. See this [stackoverflow thread](https://stackoverflow.com/questions/39604271/conda-environments-not-showing-up-in-jupyter-notebook) for how to add a `conda` environment to your Jupyter kernel.
+
+## Disclaimer
+This codebase was written for scientific purposes, and as such, it was not implemented with scalability or generality in mind, and there is no continued support or updates for it. If you wish to fork this repository and use it in your projects, you may contact me for individual support at [zadeh@jhu.edu](mail:zadeh@jhu.edu).
