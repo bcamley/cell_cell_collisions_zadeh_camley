@@ -1,5 +1,5 @@
 # Description
-This codebase generates all the simulations and data presented in our paper [1]. Briefly, two cells are modeled energetically within the phase-field framework and undergo head-on collisions. Our main goal is to study how the speed and contact angle of the cell affect its chances to remain persistent upon head-on collisions.
+This codebase generates all the simulations and data presented in our paper [1]. Briefly, two cells are modeled energetically within the phase-field framework and undergo head-on collisions. Our main goal is to study how the speed and contact angle of the cell affect its chances to remain persistent upon head-on collisions. The original code is at https://github.com/pedromzadeh/collider or https://doi.org/10.5281/zenodo.7249510 - this is just a duplicate so the group's code is all on one github. All the code here is by Pedrom Zadeh. 
 
 [1] Zadeh, Pedrom, and Brian A., Camley. "Picking winners in cell-cell collisions: wetting, speed, and contact".bioRxiv (2022).
 
